@@ -1,0 +1,23 @@
+/dts-v1/;
+/plugin/;
+
+#include "../common/common.dtsi"
+#include "huawei-charger.dtsi"
+#include "huawei-lcd.dtsi"
+#include "huawei-camera.dtsi"
+#include "huawei-wifi.dtsi"
+#include "huawei-nfc.dtsi"
+
+/ {
+    model = "Huawei Technologies, Inc. JLN-LX1";
+    huawei,board-id = <8000>;
+};
+
+&rootparam {
+    /* auto_key_info @ name: boardid type: uint32 default: 0 */
+    qcom,boardid = <8 0 0 0>;
+    qcom,board_name = "JLN_LX1_VA";
+    qcom,product_name = "JLN-LX1";
+    hardware_version = "HL1JLNM";
+    huawei,modem_id = <0xFD440000 0x0>;
+};

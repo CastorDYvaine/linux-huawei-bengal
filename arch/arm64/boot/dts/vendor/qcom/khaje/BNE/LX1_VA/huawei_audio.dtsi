@@ -1,0 +1,5 @@
+
+&dai_mi2s0 {
+	qcom,msm-mi2s-rx-lines = <1>;
+	qcom,msm-mi2s-tx-lines = <2>;
+};

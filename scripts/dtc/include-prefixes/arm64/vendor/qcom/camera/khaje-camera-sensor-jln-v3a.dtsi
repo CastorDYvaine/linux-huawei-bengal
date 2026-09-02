@@ -1,0 +1,278 @@
+#include "huawei-khaje-camera-wl2866d.dtsi"
+#include "khaje-camera-sensor-jln-v3.dtsi"
+
+&cam_res_mgr_label{
+	compatible = "qcom,cam-res-mgr";
+	status = "ok";
+	gpios = <&pm6125_gpios 2 0>,
+		<&tlmm 50 0>;
+	pinctrl-names = "cam_res_mgr_default", "cam_res_mgr_suspend";
+	pinctrl-0 = <&cam_dovdd_active
+		&cam_sensor_all_vovdd_active>;
+	pinctrl-1 = <&cam_dovdd_suspend
+		&cam_sensor_all_vovdd_suspend>;
+};
+
+&tlmm {
+		cam_sensor_all_vovdd_active: cam_sensor_all_vovdd_active {
+			/* DOVDD */
+			mux {
+				pins = "gpio50";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio50";
+				bias-disable; /* No PULL */
+				drive-strength = <2>; /* 2 MA */
+			};
+		};
+
+		cam_sensor_all_vovdd_suspend: cam_sensor_all_vovdd_suspend {
+			/* DOVDD */
+			mux {
+				pins = "gpio50";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio50";
+				bias-pull-down; /* PULL DOWN */
+				drive-strength = <2>; /* 2 MA */
+				output-low;
+			};
+		};
+};
+
+&cam_cci0 {
+	qcom,eeprom0 {
+		cam_vana-supply = <&camera_avdd1>;
+		cam_vdig-supply = <&camera_dvdd2>;
+		regulator-names = "cam_vana", "cam_vdig", "cam_clk";
+		rgltr-min-voltage = <2800000 1050000  0>;
+		rgltr-max-voltage = <2800000 1050000  0>;
+		rgltr-load-current = <80000 1200000 0>;
+
+		pinctrl-0 = <&cam_sensor_mclk0_active
+				&cam_sensor_rear0_reset_active>;
+		pinctrl-1 = <&cam_sensor_mclk0_suspend
+				&cam_sensor_rear0_reset_suspend>;
+		gpios = <&tlmm 20 0>,
+			<&tlmm 18 0>,
+			<&tlmm 50 0>;
+		gpio-reset = <1>;
+		gpio-custom-vio = <2>;
+		gpio-req-tbl-num = <0 1 2>;
+		gpio-req-tbl-flags = <1 0 0>;
+		gpio-req-tbl-label = "CAMIF_MCLK0",
+					"CAM_RESET0",
+					"CAM_VIO0";
+	};
+
+	qcom,eeprom2 {
+		cam_vana-supply = <&camera_avdd2>;
+		cam_vdig-supply = <&camera_dvdd1>;
+		regulator-names = "cam_vana", "cam_vdig", "cam_clk";
+		rgltr-min-voltage = <2800000 1050000  0>;
+		rgltr-max-voltage = <2800000 1050000  0>;
+		rgltr-load-current = <80000 1200000 0>;
+
+		pinctrl-0 = <&cam_sensor_mclk1_active
+				&cam_sensor_front0_reset_active>;
+		pinctrl-1 = <&cam_sensor_mclk1_suspend
+				&cam_sensor_front0_reset_suspend>;
+		gpios = <&tlmm 21 0>,
+			<&tlmm 19 0>,
+			<&pm6125_gpios 2 0>,
+			<&tlmm 50 0>;
+		gpio-reset = <1>;
+		gpio-custom-vana = <2>;
+		gpio-custom-vio = <3>;
+		gpio-req-tbl-num = <0 1 2 3>;
+		gpio-req-tbl-flags = <1 0 0 0>;
+		gpio-req-tbl-label = "CAMIF_MCLK2",
+					"CAM_RESET2",
+					"CAM_VANA2",
+					"CAM_VIO2";
+	};
+
+	qcom,eeprom3 {
+		cam_vdig-supply = <&camera_dvdd1>;
+		regulator-names = "cam_vdig", "cam_clk";
+		rgltr-min-voltage = <1200000 0>;
+		rgltr-max-voltage = <1200000 0>;
+		rgltr-load-current = <1200000 0>;
+
+		pinctrl-0 = <&cam_sensor_mclk3_active
+				&cam_sensor_rear1_reset_active
+				&cam_sensor_sel_active>;
+		pinctrl-1 = <&cam_sensor_mclk3_suspend
+				&cam_sensor_rear1_reset_suspend
+				&cam_sensor_sel_suspend>;
+		gpios = <&tlmm 28 0>,
+			<&tlmm 24 0>,
+			<&tlmm 44 0>,
+			<&pm6125_gpios 2 0>,
+			<&tlmm 50 0>;
+		gpio-reset = <1>;
+		gpio-custom1 = <2>;
+		gpio-custom-vana = <3>;
+		gpio-custom-vio = <4>;
+		gpio-req-tbl-num = <0 1 2 3 4>;
+		gpio-req-tbl-flags = <1 0 0 0 0>;
+		gpio-req-tbl-label = "CAMIF_MCLK3",
+					"CAM_RESET3",
+					"CAM_SEL",
+					"CAM_VANA3",
+					"CAM_VIO3";
+	};
+
+	qcom,eeprom4 {
+		pinctrl-0 = <&cam_sensor_mclk3_active
+				&cam_sensor_rear2_reset_active>;
+		pinctrl-1 = <&cam_sensor_mclk3_suspend
+				&cam_sensor_rear2_reset_suspend>;
+		gpios = <&tlmm 28 0>,
+			<&tlmm 66 0>,
+			<&pm6125_gpios 2 0>,
+			<&tlmm 50 0>;
+		gpio-reset = <1>;
+		gpio-custom-vana = <2>;
+		gpio-custom-vio = <3>;
+		gpio-req-tbl-num = <0 1 2 3>;
+		gpio-req-tbl-flags = <1 0 0 0>;
+		gpio-req-tbl-label = "CAMIF_MCLK4",
+					"CAM_RESET4",
+					"CAM_VANA4",
+					"CAM_VIO4";
+	};
+
+	// Rear
+	qcom,cam-sensor0 {
+		cam_vana-supply = <&camera_avdd1>;
+		cam_vdig-supply = <&camera_dvdd2>;
+		regulator-names = "cam_vana", "cam_vdig", "cam_clk";
+		rgltr-min-voltage = <2800000 1050000  0>;
+		rgltr-max-voltage = <2800000 1050000  0>;
+		rgltr-load-current = <80000 1200000 0>;
+
+		pinctrl-0 = <&cam_sensor_mclk0_active
+				&cam_sensor_rear0_reset_active
+				&rear_cam_vaf_default>;
+		pinctrl-1 = <&cam_sensor_mclk0_suspend
+				&cam_sensor_rear0_reset_suspend
+				&rear_cam_vaf_suspend>;
+		gpios = <&tlmm 20 0>,
+			<&tlmm 18 0>,
+			<&tlmm 50 0>,
+			<&tlmm 38 0>;
+		gpio-reset = <1>;
+		gpio-custom-vio = <2>;
+		gpio-custom-vaf = <3>;
+		gpio-req-tbl-num = <0 1 2 3>;
+		gpio-req-tbl-flags = <1 0 0 0>;
+		gpio-req-tbl-label = "CAMIF_MCLK0",
+					"CAM_RESET0",
+					"CAM_VIO0",
+					"CAM_VAF0";
+	};
+
+	//Rear Aux
+	qcom,cam-sensor1 {
+		pinctrl-0 = <&cam_sensor_mclk3_active
+				&cam_sensor_rear1_reset_active>;
+		pinctrl-1 = <&cam_sensor_mclk3_suspend
+				&cam_sensor_rear1_reset_suspend>;
+		gpios = <&tlmm 28 0>,
+			<&tlmm 67 0>,
+			<&pm6125_gpios 2 0>,
+			<&tlmm 50 0>;
+		gpio-reset = <1>;
+		gpio-custom-vana = <2>;
+		gpio-custom-vio = <3>;
+		gpio-req-tbl-num = <0 1 2 3>;
+		gpio-req-tbl-flags = <1 0 0 0>;
+		gpio-req-tbl-label = "CAMIF_MCLK1",
+					"CAM_RESET1",
+					"CAM_VANA1",
+					"CAM_VIO1";
+	};
+
+	//Front
+	qcom,cam-sensor2 {
+		cam_vana-supply = <&camera_avdd2>;
+		cam_vdig-supply = <&camera_dvdd1>;
+		regulator-names = "cam_vana", "cam_vdig", "cam_clk";
+		rgltr-min-voltage = <2800000 1050000  0>;
+		rgltr-max-voltage = <2800000 1050000  0>;
+		rgltr-load-current = <80000 1200000 0>;
+
+		pinctrl-0 = <&cam_sensor_mclk1_active
+				&cam_sensor_front0_reset_active>;
+		pinctrl-1 = <&cam_sensor_mclk1_suspend
+				&cam_sensor_front0_reset_suspend>;
+		gpios = <&tlmm 21 0>,
+			<&tlmm 19 0>,
+			<&tlmm 50 0>;
+		gpio-reset = <1>;
+		gpio-custom-vio = <2>;
+		gpio-req-tbl-num = <0 1 2>;
+		gpio-req-tbl-flags = <1 0 0>;
+		gpio-req-tbl-label = "CAMIF_MCLK2",
+					"CAM_RESET2",
+					"CAM_VIO2";
+	};
+
+	//Rear Aux2
+	qcom,cam-sensor3 {
+		cam_vdig-supply = <&camera_dvdd1>;
+		regulator-names = "cam_vdig", "cam_clk";
+		rgltr-min-voltage = <1200000  0>;
+		rgltr-max-voltage = <1200000  0>;
+		rgltr-load-current = <1200000 0>;
+
+		pinctrl-0 = <&cam_sensor_mclk3_active
+				&cam_sensor_rear1_reset_active
+				&cam_sensor_sel_active>;
+		pinctrl-1 = <&cam_sensor_mclk3_suspend
+				&cam_sensor_rear1_reset_suspend
+				&cam_sensor_sel_suspend>;
+		gpios = <&tlmm 28 0>,
+			<&tlmm 24 0>,
+			<&tlmm 44 0>,
+			<&pm6125_gpios 2 0>,
+			<&tlmm 50 0>;
+		gpio-reset = <1>;
+		gpio-custom1 = <2>;
+		gpio-custom-vana = <3>;
+		gpio-custom-vio = <4>;
+		gpio-req-tbl-num = <0 1 2 3 4>;
+		gpio-req-tbl-flags = <1 0 0 0 0>;
+		gpio-req-tbl-label = "CAMIF_MCLK3",
+					"CAM_RESET3",
+					"CAM_SEL",
+					"CAM_VANA3",
+					"CAM_VIO3";
+	};
+
+	/*Rear Aux3*/
+	qcom,cam-sensor4 {
+		pinctrl-0 = <&cam_sensor_mclk3_active
+				&cam_sensor_rear2_reset_active>;
+		pinctrl-1 = <&cam_sensor_mclk3_suspend
+				&cam_sensor_rear2_reset_suspend>;
+		gpios = <&tlmm 28 0>,
+			<&tlmm 66 0>,
+			<&pm6125_gpios 2 0>,
+			<&tlmm 50 0>;
+		gpio-reset = <1>;
+		gpio-custom-vana = <2>;
+		gpio-custom-vio = <3>;
+		gpio-req-tbl-num = <0 1 2 3>;
+		gpio-req-tbl-flags = <1 0 0 0>;
+		gpio-req-tbl-label = "CAMIF_MCLK4",
+					"CAM_RESET4",
+					"CAM_VANA4",
+					"CAM_VIO4";
+	};
+};

@@ -1,0 +1,39 @@
+&qupv3_se2_i2c {
+	wl2866d_regulators@28 {
+		compatible = "wl2866d-regulator";
+		reg = <0x28>;
+		vin1-supply = <&S6A>;
+		vin1-voltage-level = <1350000  1350000>;
+		vin2-supply = <&S6A>;
+		vin2-voltage-level = <3300000  3300000>;
+		status = "ok";
+
+		camera_dvdd1: camera_dvdd1 {
+			regulator-name = "camera_dvdd1";
+			regulator-min-microvolt = <600000>;
+			regulator-max-microvolt = <1260000>;
+			status = "ok";
+		};
+
+		camera_dvdd2: camera_dvdd2 {
+			regulator-name = "camera_dvdd2";
+			regulator-min-microvolt = <600000>;
+			regulator-max-microvolt = <1260000>;
+			status = "ok";
+		};
+
+		camera_avdd1: camera_avdd1 {
+			regulator-name = "camera_avdd1";
+			regulator-min-microvolt = <1200000>;
+			regulator-max-microvolt = <2930000>;
+			status = "ok";
+		};
+
+		camera_avdd2: camera_avdd2 {
+			regulator-name = "camera_avdd2";
+			regulator-min-microvolt = <1200000>;
+			regulator-max-microvolt = <2930000>;
+			status = "ok";
+		};
+	};
+};

@@ -1,0 +1,22 @@
+/dts-v1/;
+/plugin/;
+
+#include "../common/common.dtsi"
+#include "huawei-charger.dtsi"
+#include "huawei-lcd.dtsi"
+#include "huawei-wifi.dtsi"
+#include "huawei_audio.dtsi"
+
+/ {
+    model = "Huawei Technologies, Inc. CTR-AL00";
+    huawei,board-id = <8520>;
+};
+
+&rootparam {
+    /* auto_key_info @ name: boardid type: uint32 default: 0 */
+    qcom,boardid = <8 5 2 0>;
+    qcom,board_name = "CTR_AL00_VA";
+    qcom,product_name = "CTR-AL00";
+    hardware_version = "LLDM599";
+    huawei,modem_id = <0xFD450000 0x0>;
+};

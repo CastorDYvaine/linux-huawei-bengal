@@ -1,0 +1,19 @@
+	&reserved_memory {
+		removed_mem: removed_region@60000000 {
+			compatible = "removed-dma-pool";
+			no-map;
+			reg = <0x0 0x60000000 0x0 0x6900000>;
+		};
+
+		rainbow_mem: rainbow_mem@64900000 {
+			compatible = "removed-dma-pool", "rainbow_mem";
+			no-map;
+			reg = <0x0 0x66900000 0x0 0x400000>;
+		};
+
+		bootfail_mem: bootfail_mem@64D00000 {
+			compatible = "removed-dma-pool", "bootfail_mem";
+			no-map;
+			reg = <0x0 0x66D00000 0x0 0x800>;
+		};
+	};

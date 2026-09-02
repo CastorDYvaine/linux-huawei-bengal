@@ -1,0 +1,4 @@
+&class_sensors {
+     compatible = "huawei,ps_sensor";
+     status = "ok";
+};

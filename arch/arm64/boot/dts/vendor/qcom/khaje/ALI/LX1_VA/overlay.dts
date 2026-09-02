@@ -1,0 +1,20 @@
+/dts-v1/;
+/plugin/;
+
+#include "../common/common.dtsi"
+#include "huawei-wifi.dtsi"
+#include "huawei-nfc.dtsi"
+
+/ {
+    model = "Huawei Technologies, Inc. ALI-LX1";
+    huawei,board-id = <8406>;
+};
+
+&rootparam {
+    /* auto_key_info @ name: boardid type: uint32 default: 0 */
+    qcom,boardid = <8 4 0 6>;
+    qcom,board_name = "ALA_LX1_VA";
+    qcom,product_name = "ALI-LX1";
+    hardware_version = "HL1ALAM";
+    huawei,modem_id = <0xFD4B0100 0x0>;
+};

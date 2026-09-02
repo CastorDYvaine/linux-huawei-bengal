@@ -1,0 +1,182 @@
+/* touch panel config */
+&tlmm {
+	pmx_ts_int_active {
+		ts_int_active: ts_int_active {
+			mux {
+				pins = "gpio97";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio97";
+				drive-strength = <8>;
+				bias-pull-up;
+			};
+		};
+	};
+
+	pmx_ts_int_suspend {
+		ts_int_suspend: ts_int_suspend {
+			mux {
+				pins = "gpio97";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio97";
+				drive-strength = <2>;
+				bias-pull-down;
+			};
+		};
+	};
+
+	pmx_ts_reset_active {
+		ts_reset_active: ts_reset_active {
+			mux {
+				pins = "gpio86";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio86";
+				drive-strength = <8>;
+				bias-pull-up;
+			};
+		};
+	};
+
+	pmx_ts_reset_suspend {
+		ts_reset_suspend: ts_reset_suspend {
+			mux {
+				pins = "gpio86";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio86";
+				drive-strength = <2>;
+				bias-pull-down;
+			};
+		};
+	};
+
+	pmx_ts_release {
+		ts_release: ts_release {
+			mux {
+				pins = "gpio97", "gpio86";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio97", "gpio86";
+				drive-strength = <2>;
+				bias-pull-down;
+			};
+		};
+	};
+};
+
+&qupv3_se0_spi {
+	status = "ok";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+	qcom,rt = <1>;
+	qcom,use-fixed-timeout = <1>;
+	huawei_thp: huawei_thp@10 {
+		compatible = "huawei,thp";
+		/* SPI Config */
+		spi-max-frequency = <10000000>;
+		spi-bus-id = <1>;
+		spi-mode = <0>;
+		reg = <0>;
+		spi_sync_cs_hi_delay_ns = <200>;
+		spi_sync_cs_low_delay_ns = <10>;
+
+		/* Timing */
+		boot_reset_hi_delay_ms = <1>;
+		boot_reset_low_delay_ms = <0>;
+		boot_reset_after_delay_ms = <0>;
+		resume_reset_after_delay_ms = <1>;
+		suspend_reset_after_delay_ms = <1>;
+		use_mdelay = <1>;
+
+		/* Power Config */
+		thp-vcc-type = <2>;
+		thp-vcc-gpio = <&tlmm 94 0>;
+		thp-iovdd-type = <2>;
+		thp-iovdd-gpio = <&tlmm 88 0>;
+		not_control_power = <1>; // DDIC panel, but no need control power
+
+		project_in_tp = <1>;
+		self_control_power = <1>; // DDIC panel, independent power
+
+		/* GPIO Config */
+		irq_flag = <0x00000002>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <97 0>;
+		rst_gpio = <&tlmm 86 0x00>;
+		irq_gpio = <&tlmm 97 0x00>;
+		cs_gpio = <&tlmm 3 0x00>;
+		early_suspend_delay_ms = <250>;
+		wait_afe_screen_on_support = <1>;
+
+		/* Feature Config */
+		pt_station_test = <1>;
+		proximity_support = <0>;
+		hide_product_info_en = <1>;
+		support_vendor_ic_type = <1>;
+		supported_charger = <1>;
+		aptouch_daemon_version = <3>;
+		use_thp_queue = <1>;
+		fast_booting_solution = <1>;
+		aod_display_support = <1>;
+		use_ap_gesture = <1>;
+		support_gesture_mode = <1>;
+		tp_assisted_ultrasonic_algo = <1>;
+		tp_time_sync_support = <1>;
+
+		thp_input_dev {
+			compatible = "huawei,thp_input";
+			abs_max_x = <1080>;
+			abs_max_y = <2400>;
+			magnification_of_finger_resolution = <8>;
+		};
+		synaptics_thp {
+			support_vendor_ic_type = <1>;
+			spi-max-frequency = <10000000>;
+			spi_sync_cs_hi_delay_ns = <20>;
+			spi_sync_cs_low_delay_ns = <20>;
+			spi_cs_clk_delay = <20>; // add (spi_cs_clk_delay * 2 / spi_clk) delay
+			spi_inter_words_delay = <1>;
+			boot_reset_hi_delay_ms = <50>;
+			iovdd_power_on_delay_ms = <3>;
+			need_huge_memory_in_spi = <1>;
+			/* IRQF_TRIGGER_LOW 0x00000008 */
+			irq_flag = <0x00000008>;
+			not_control_irq_in_irq_handler = <1>;
+			support_get_frame_read_once = <1>;
+			suspend_delayms_early_to_before = <150>;
+			suspend_delayms_before_to_later = <15>;
+			resume_delayms_early_to_later = <50>;
+			need_enable_irq_wake = <1>;
+			aod_display_support = <1>;
+			use_aod_power_ctrl_notify = <1>;
+		};
+		ssl {
+			use_default_configuration = <1>;
+			boot_reset_low_delay_ms = <5>;
+			boot_reset_hi_delay_ms = <5>;
+		};
+		ili {
+			use_default_configuration = <1>;
+			boot_reset_low_delay_ms = <5>;
+			boot_reset_hi_delay_ms = <5>;
+		};
+		novat {
+			use_default_configuration = <1>;
+			boot_reset_low_delay_ms = <5>;
+			boot_reset_hi_delay_ms = <5>;
+		};
+	};
+};

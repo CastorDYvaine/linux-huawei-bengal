@@ -1,0 +1,24 @@
+/dts-v1/;
+/plugin/;
+
+#include "../common/common.dtsi"
+#include "huawei-charger.dtsi"
+#include "huawei-lcd.dtsi"
+#include "huawei-camera.dtsi"
+#include "huawei-nfc.dtsi"
+#include "huawei-wifi.dtsi"
+#include "../common/huawei-thp.dtsi"
+
+/ {
+    model = "Huawei Technologies, Inc. JLN-AL00";
+    huawei,board-id = <8543>;
+};
+
+&rootparam {
+    /* auto_key_info @ name: boardid type: uint32 default: 0 */
+    qcom,boardid = <8 5 4 3>;
+    qcom,board_name = "BNE_AL00_VF";
+    qcom,product_name = "BNE-AL00";
+    hardware_version = "HL1BNEM";
+    huawei,modem_id = <0xFD460600 0x0>;
+};

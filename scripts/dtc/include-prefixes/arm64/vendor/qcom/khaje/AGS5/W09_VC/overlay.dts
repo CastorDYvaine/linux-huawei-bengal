@@ -1,0 +1,82 @@
+/dts-v1/;
+/plugin/;
+
+#include "../common/common.dtsi"
+#include "../common/huawei-lowram.dtsi"
+#include "huawei-wifi.dtsi"
+#include "huawei-bt.dtsi"
+#include "huawei-camera.dtsi"
+#include "huawei_audio.dtsi"
+#include "../common/huawei-pogopin.dtsi"
+
+/ {
+    model = "Huawei Technologies, Inc. AGS5Z-W09";
+    huawei,board-id = <8106>;
+};
+
+&rootparam {
+    /* auto_key_info @ name: boardid type: uint32 default: 0 */
+    qcom,boardid = <8 1 0 6>;
+    qcom,board_name = "AGS5Z_W09_VC";
+    qcom,product_name = "AGS5Z-W09";
+    hardware_version = "SH1AGS5M";
+    huawei,modem_id = <0xfd258300 0x0>;
+};
+
+&singleap_wifionly {
+        compatible = "singleap,wifionly";
+        is_wifionly = "1";
+        status = "ok";
+};
+
+&battery_model {
+	bat_id_table =
+		"BYTCLE_7600_4480_v0", "664911", "804911", "YL",
+		"BNTCDE_7600_4480_v0", "444286", "584286", "ND",
+		"BITCAE_7600_4480_v0", "266585", "406585", "IA";
+	design_fcc = <7600>;
+	support_iio = <1>;
+	io-channels = <&pm6125_vadc ADC_GPIO4_PU2>;
+	io-channel-names = "batt-id";
+	id_adc_channel = <0>; /* useless but necessary for Qcom, set 0 as default */
+	status = "ok";
+};
+
+&charging_core {
+	status = "ok";
+	ichg_ac = <2900>;
+	iin_ac = <2000>;
+	iterm = <200>;
+	temp_para =
+		"-32767","0","-1","0","4100","0",
+		"0","10","-1","2280","4480","0",
+		"10","20","-1","2900","4480","3",
+		"20","45","-1","2900","4480","3",
+		"45","50","-1","2900","4100","3",
+		"50","32767","-1","0","4100","0";
+};
+
+&qupv3_se2_i2c {
+	bq2560x_charger@6B{
+		custom_cv = <4480>;
+	};
+	rt9471@53 {
+		custom_cv = <4480>;
+	};
+	cw2217@64 {
+		en_soft_reset = <1>;
+		vbat_soc_table =
+			"3805", "3810", "3805", "30",
+			"3830", "3830", "3828", "36",
+			"3863", "3865", "3862", "43",
+			"3900", "3902", "3899", "49",
+			"3951", "3960", "3955", "55",
+			"4030", "4037", "4031", "62",
+			"4093", "4098", "4093", "68",
+			"4163", "4167", "4160", "74",
+			"4248", "4251", "4245", "81",
+			"4316", "4320", "4315", "87",
+			"4389", "4391", "4387", "94",
+			"4464", "4464", "4464", "100";
+	};
+};

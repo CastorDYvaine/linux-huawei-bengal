@@ -1,0 +1,70 @@
+&tlmm {
+	ext_pa {
+		ext_pa_default: ext_pa_default {
+			mux {
+				pins = "gpio54";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio54";
+				bias-pull-up;
+				input-enable;
+			};
+		};
+	};
+
+	simple_pa_id: simple_pa_id {
+		mux {
+			pins = "gpio100", "gpio101";
+			function =  "gpio";
+		};
+		config {
+			pins = "gpio100", "gpio101";
+			bias-pull-up;
+			input-enable;
+		};
+	};
+};
+
+&huawei_audio_info {
+	compatible = "hw,hw_audio_info";
+	product_identifier = "ctr";
+	voice_vol_level = "10";
+	separate_param_for_different_pa;
+	need_identify_pa_vendor;
+	pinctrl-names = "ext_pa_default", "simple_pa_id";
+	pinctrl-0 = <&ext_pa_default>;
+	pinctrl-1 = <&simple_pa_id>;
+	spk-ext-simple-pa = <&tlmm 54 0>;
+	simple-pa-id-gpios = <&tlmm 100 0 &tlmm 101 0>;
+	gpio_num = <2>; /* for simple pa vendor type GPIO*/
+	fm_device_switch = "true";
+	status = "ok";
+	hardware_info {
+		mic_num = "2";
+		status = "ok";
+		hostless_id_info {
+			hostless_id_reset = "true";
+			spk_rx_hostless_id = "30";
+			earpiece_rx_hostless_id = "30";
+			headset_rx_hostless_id = "30";
+			builtin_mic_tx_hostless_id = "31";
+			hsmic_tx_hostless_id = "41";
+		};
+	};
+};
+
+&audio_hw_config {
+	asr_enable = "true";
+	vassistant_call = "true";
+	cam_record_perf = "true";
+};
+
+&bengal_snd {
+	qcom,msm-mbhc-hphl-swh = <1>;
+	qcom,msm-mbhc-gnd-swh = <0>;
+	qcom,msm-mbhc-usbc-audio-supported = <0>;
+	qcom,msm-mbhc-anahs-cmos = <0>;
+	qcom,spk-hs-turnoff-hph-bypass = "true";
+};

@@ -1,0 +1,35 @@
+&tlmm {
+	fkey_default: fkey_default {
+		mux {
+			pins = "gpio93";
+			function =  "gpio";
+		};
+		config {
+			pins = "gpio93";
+			drive-strength = <2>;
+			bias-pull-up;
+		};
+	};
+};
+
+&f_key {
+	compatible = "huawei,f_key";
+	fkey,name = "fkey";
+	fkey,input-code = <249>;
+	fkey,gpio = <&tlmm 93 0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&fkey_default>;
+	status = "ok";
+};
+
+&soc {
+    vibrator_gpio {
+        compatible = "vib,pmi-ldo-vibrator";
+        vib,platform-en-gpio = <&pm6125_gpios 9 GPIO_ACTIVE_HIGH>;
+    };
+};
+
+&class_sensors {
+	compatible = "huawei,ps_sensor";
+	status = "ok";
+};

@@ -1,0 +1,54 @@
+&tlmm {
+	batt_io_pins_default: batt_io_pins_default {
+		mux {
+			pins = "gpio83";
+			function = "gpio";
+		};
+		config {
+			pins = "gpio83";
+			bias-disable;
+		};
+	};
+	batt_en_pins_default: battct_en_pins_default {
+		mux {
+			pins = "gpio108";
+			function = "gpio";
+		};
+		config {
+			pins = "gpio108";
+			bias-disable;
+			output-high;
+		};
+	};
+};
+
+&pm6125_vadc {
+	pinctrl-0 = <&batt_id_default>;
+
+	batt_id {
+		reg = <ADC_GPIO4>;
+		label = "batt_id";
+		qcom,pre-scaling = <1 1>;
+	};
+};
+
+&battery_model {
+	bat_id_table =
+		"BITCAE_3900_4450_v0", "945000", "1279000", "IA",
+		"BCYCAE_3900_4450_v0", "557000", "754000", "CA";
+	design_fcc = <3900>;
+	support_iio = <1>;
+	io-channels = <&pm6125_vadc ADC_GPIO4>;
+	io-channel-names = "batt-id";
+	id_adc_channel = <0>; /* useless but necessary for Qcom, set 0 as default */
+	status = "ok";
+};
+
+&pm6125_gpios {
+	batt_id {
+		batt_id_default: batt_id_default {
+			pins = "gpio7";
+			 bias-high-impedance;
+		};
+	};
+};

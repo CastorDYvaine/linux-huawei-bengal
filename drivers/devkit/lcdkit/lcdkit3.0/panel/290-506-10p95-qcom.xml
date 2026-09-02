@@ -1,0 +1,20 @@
+<hwlcd>
+<PanelEntry>
+	<PanelCompatible>"290_506_10p95"</PanelCompatible>
+	<MdssPanelName>"290_506_10p95"</MdssPanelName>
+	<PanelName>"290_506 10.95' VIDEO 1200 x 1920"</PanelName>
+	<!--lcdtype: amoled_2, lcd_1-->
+	<PanelType>0x01</PanelType>
+	<PanelPhyWidth>148</PanelPhyWidth>
+	<PanelPhyHeight>236</PanelPhyHeight>
+
+	<!-- Panel Command information -->
+	<PanelOnCommand0>"0x05, 0x01, 0x00, 0x00, 0x64, 0x00, 0x01, 0x11
+		0x05, 0x01, 0x00, 0x00, 0x14, 0x00, 0x01, 0x29"</PanelOnCommand0>
+	<PanelOnCommandState0>"dsi_lp_mode"</PanelOnCommandState0>
+
+	<PanelOffCommand0>"0x05, 0x01, 0x00, 0x00, 0x14, 0x00, 0x01, 0x28
+		0x05, 0x01, 0x00, 0x00, 0x64, 0x00, 0x01, 0x10"</PanelOffCommand0>
+	<PanelOffCommandState0>"dsi_lp_mode"</PanelOffCommandState0>
+</PanelEntry>
+</hwlcd>

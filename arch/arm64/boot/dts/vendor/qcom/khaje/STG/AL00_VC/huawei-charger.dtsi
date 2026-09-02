@@ -1,0 +1,30 @@
+&qupv3_se1_i2c {
+	status = "ok";
+	rt1711_i2c@4e {
+		vbus_only_ignore = <1>;
+		rt-tcpc,role_def = <3>; /* 0: SNK Only, 1: SRC Only, 2: DRP, 3: Try.SRC, 4: Try.SNK */
+		status = "ok";
+	};
+
+        sc8933@76{
+                status = "ok";
+        };
+
+        protocol_ic_rstm32g031_i2c@56 {
+                status = "ok";
+        };
+};
+
+&pd_dpm_thirdparty {
+	vbus_only_ignore = <1>;
+	status = "ok";
+};
+
+&reverse_charge {
+	rchg_use_boost = <1>; /*1: use boost; 0: use buck charger */
+};
+
+&usb_short_circuit_protect {
+        status = "disabled";
+};
+

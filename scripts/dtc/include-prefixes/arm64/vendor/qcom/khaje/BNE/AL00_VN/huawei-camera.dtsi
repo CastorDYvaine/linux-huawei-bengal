@@ -1,0 +1,5 @@
+#include "../../../camera/khaje-camera-sensor-bne-v3b.dtsi"
+
+&product_name_camera {
+        product-name = "bne-plus";
+};

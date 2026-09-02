@@ -1,0 +1,185 @@
+/* touch panel config */
+&tlmm {
+	pmx_ts_int_active {
+		ts_int_active: ts_int_active {
+			mux {
+				pins = "gpio80";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio80";
+				drive-strength = <8>;
+				bias-pull-up;
+			};
+		};
+	};
+
+	pmx_ts_int_suspend {
+		ts_int_suspend: ts_int_suspend {
+			mux {
+				pins = "gpio80";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio80";
+				drive-strength = <2>;
+				bias-pull-down;
+			};
+		};
+	};
+
+	pmx_ts_reset_active {
+		ts_reset_active: ts_reset_active {
+			mux {
+				pins = "gpio86";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio86";
+				drive-strength = <8>;
+				bias-pull-up;
+			};
+		};
+	};
+
+	pmx_ts_reset_suspend {
+		ts_reset_suspend: ts_reset_suspend {
+			mux {
+				pins = "gpio86";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio86";
+				drive-strength = <2>;
+				bias-pull-down;
+			};
+		};
+	};
+
+	pmx_ts_release {
+		ts_release: ts_release {
+			mux {
+				pins = "gpio80", "gpio86";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio80", "gpio86";
+				drive-strength = <2>;
+				bias-pull-down;
+			};
+		};
+	};
+};
+
+&qupv3_se0_spi {
+	status = "ok";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+	qcom,rt = <1>;
+	huawei_thp: huawei_thp@10 {
+		compatible = "huawei,thp";
+		/* SPI Config */
+		spi-max-frequency = <16000000>;
+		spi-bus-id = <1>;
+		spi-mode = <3>;
+		reg = <0>;
+		spi_sync_cs_hi_delay_ns = <200>;
+		spi_sync_cs_low_delay_ns = <10>;
+
+		/* Timing */
+		boot_reset_hi_delay_ms = <1>;
+		boot_reset_low_delay_ms = <0>;
+		resume_reset_after_delay_ms = <1>;
+		suspend_reset_after_delay_ms = <1>;
+		use_mdelay = <1>;
+
+		/* GPIO Config */
+		interrupt-parent = <&tlmm>;
+		interrupts = <80 0>;
+		rst_gpio = <&tlmm 86 0x00>;
+		irq_gpio = <&tlmm 80 0x00>;
+		cs_gpio = <&tlmm 3 0x00>;
+		early_suspend_delay_ms = <250>;
+		wait_afe_screen_on_support = <1>;
+
+		/* Feature Config */
+		pt_station_test = <1>;
+		hide_product_info_en = <1>;
+		support_vendor_ic_type = <1>;
+		supported_charger = <1>;
+		aptouch_daemon_version = <3>;
+		use_thp_queue = <1>;
+		support_gesture_mode = <1>;
+		lcd_esd_event_upload = <1>;
+		lcd_gesture_mode_support = <1>;
+		project_in_tp = <1>;
+		pen_supported = <1>;
+		pen_mt_enable_flag =<1>;
+		send_bt_status_to_fw = <1>;
+		need_notify_to_roi_algo =<1>;
+		need_enable_irq_wake = <1>;
+		need_huge_memory_in_spi = <1>;
+		send_stylus3_workmode_to_fw = <1>;
+		thp_input_dev {
+			compatible = "huawei,thp_input";
+			abs_max_x = <1200>;
+			abs_max_y = <1920>;
+			/* Recovery adapted yet, then it can be 8 */
+			magnification_of_finger_resolution = <8>;
+		};
+			/* Pen Input Config */
+		thp_pen_input_dev {
+			compatible = "huawei,thp_pen_input";
+			max_x = <9599>;
+			max_y = <15359>;
+			max_pressure = <16384>;
+		};
+		himax-hx83112 {
+			spi-mode = <3>;
+			spi-max-frequency = <12500000>;
+			irq_flag = <0x00000008>;
+			avoid_low_level_irq_storm = <1>;
+			not_control_irq_in_irq_handler = <1>;
+			spi_sync_cs_hi_delay_ns = <20>;
+			spi_sync_cs_low_delay_ns = <20>;
+			get_frame_optimized_method =<1>;
+			himax_ic_83102_flag = <1>;
+			himax_ic_83102_no_flash = <1>;
+			himax_ic_hispeed_support = <1>;
+			himax_gesture_need_lcd_rst = <0>;
+			need_enable_irq_wake = <1>;
+		};
+		novatech {
+			spi-mode = <0>;
+			spi-max-frequency = <16000000>;
+			irq_flag = <0x00000002>;
+			spi_sync_cs_hi_delay_ns = <1000>;
+			spi_sync_cs_low_delay_ns = <200>;
+			need_enable_irq_wake = <1>;
+			change_spi_driving_force = <1>;
+			project_in_tp = <0>;
+			support_vendor_ic_type = <7>;
+		};
+		chipone {
+			spi-mode = <0>;
+			irq_flag = <0x00000002>;
+			spi-max-frequency = <16000000>;
+			spi_sync_cs_hi_delay_ns = <200>;
+			spi_sync_cs_low_delay_ns = <200>;
+			boot_reset_hi_delay_ms = <1>;
+			boot_reset_low_delay_ms = <10>;
+			boot_reset_after_delay_ms = <75>;
+			project_in_tp = <0>;
+			aod_support_on_tddi = <0>;
+			support_vendor_ic_type = <3>;
+			touch_frame_size = <4095>;
+			need_enable_irq_wake = <1>;
+		};
+	};
+};

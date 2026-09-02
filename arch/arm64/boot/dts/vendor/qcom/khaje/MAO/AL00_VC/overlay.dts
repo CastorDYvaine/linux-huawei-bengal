@@ -1,0 +1,23 @@
+/dts-v1/;
+/plugin/;
+
+#include "../common/common.dtsi"
+#include "huawei-charger.dtsi"
+#include "huawei-lcd.dtsi"
+#include "huawei-wifi.dtsi"
+#include "huawei_audio.dtsi"
+#include "huawei-camera.dtsi"
+
+/ {
+    model = "Huawei Technologies, Inc. MAO-AL00";
+    huawei,board-id = <8452>;
+};
+
+&rootparam {
+    /* auto_key_info @ name: boardid type: uint32 default: 0 */
+    qcom,boardid = <8 4 5 2>;
+    qcom,board_name = "MAO_AL00_VC";
+    qcom,product_name = "MAO-AL00";
+    hardware_version = "LLDM555";
+    huawei,modem_id = <0xFD480000 0x0>;
+};

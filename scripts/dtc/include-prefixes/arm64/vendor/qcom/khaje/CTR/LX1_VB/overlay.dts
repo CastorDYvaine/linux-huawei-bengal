@@ -1,0 +1,22 @@
+/dts-v1/;
+/plugin/;
+
+#include "../common/common.dtsi"
+#include "huawei-charger.dtsi"
+#include "huawei-lcd.dtsi"
+#include "huawei-wifi.dtsi"
+#include "huawei-nfc.dtsi"
+
+/ {
+    model = "Huawei Technologies, Inc. CTR-LX1";
+    huawei,board-id = <8525>;
+};
+
+&rootparam {
+    /* auto_key_info @ name: boardid type: uint32 default: 0 */
+    qcom,boardid = <8 5 2 5>;
+    qcom,board_name = "CTR_LX1_VB";
+    qcom,product_name = "CTR-LX1";
+    hardware_version = "LLDM599";
+    huawei,modem_id = <0xFD450500 0x0>;
+};

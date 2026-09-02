@@ -1,0 +1,5 @@
+#include "../../../camera/khaje-camera-sensor-bne-vn1b_8565.dtsi"
+
+&product_name_camera {
+        product-name = "bne-plus";
+};

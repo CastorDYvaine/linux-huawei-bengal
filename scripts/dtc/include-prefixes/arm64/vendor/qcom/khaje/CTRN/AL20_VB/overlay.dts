@@ -1,0 +1,20 @@
+/dts-v1/;
+/plugin/;
+
+#include "../common/common.dtsi"
+#include "huawei-wifi.dtsi"
+#include "huawei-charger.dtsi"
+
+/ {
+    model = "Huawei Technologies, Inc. CTR-AL20";
+    huawei,board-id = <8332>;
+};
+
+&rootparam {
+    /* auto_key_info @ name: boardid type: uint32 default: 0 */
+    qcom,boardid = <8 3 3 2>;
+    qcom,board_name = "CTR_AL20_VB";
+    qcom,product_name = "CTR-AL20";
+    hardware_version = "HL2CTRM";
+    huawei,modem_id = <0xFD490100 0x0>;
+};

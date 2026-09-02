@@ -1,0 +1,43 @@
+&L22A{
+	regulator-name = "pm6125_l22";
+	regulator-min-microvolt = <2952000>;
+	regulator-max-microvolt = <3300000>;
+	qcom,init-voltage = <2952000>;
+};
+
+&ana_hs {
+	compatible = "huawei,ana_hs";
+	status = "ok";
+	ana_hs_core@0 {
+		compatible = "huawei,ana_hs_core";
+		regulator_used;
+		ana_hs_switch-supply = <&L22A>;
+		ana_hs_switch_vol = <3300000>;
+		bus_type = <2>; // 0: gpio,  1: i2c
+
+		pinctrl-names = "mic_off", "mic_on", "ldo_off", "ldo_on";
+		pinctrl-0 = <&audio_mic_en_off>;
+		pinctrl-1 = <&audio_mic_en_on>;
+		pinctrl-2 = <&typec_ear_3v3_en_off>;
+		pinctrl-3 = <&typec_ear_3v3_en_on>;
+
+		plugout_timing_optimization = <1>;
+		plugin_status_stable_delay = <300>;
+		/* plug_in sequence */
+		plug_in_seq = <
+			0 0 0 0
+		>;
+
+		/* plug_out sequence */
+		plug_out_seq = <
+			0 0 0 0
+		>;
+
+		/* mic_gnd_switch used gpio */
+		mic_gnd_sequence = <
+			0 1 0 150
+		>;
+
+		status = "ok";
+	};
+};

@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: GPL-2.0
+config HUAWEI_BATTERY_BENGAL_ISCD
+	bool "huawei battery bengal iscd"
+	default n
+	help
+	  Say Y here if you want to use the huawei battery bengal iscd.
+	  If unsure, say N here.
+
+source "drivers/huawei_platform/hwpower/proxy/Kconfig"
+source "drivers/huawei_platform/hwpower/glink/Kconfig"
+source "drivers/huawei_platform/hwpower/hardware_ic/Kconfig"

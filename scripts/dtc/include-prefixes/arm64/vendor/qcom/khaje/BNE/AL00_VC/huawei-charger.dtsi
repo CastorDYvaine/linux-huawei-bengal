@@ -1,0 +1,215 @@
+&direct_charge_ic {
+	/* ic_index  path_index  max_ibat  ibat_sample_point  vbat_sample_point */
+	ic_para1 =
+		"1", "0", "5000", "0", "0",
+		"0", "-1", "0", "1", "1";
+	ic_para2 =
+		"0", "0", "8500", "0", "0",
+		"1", "1", "5000", "0", "1";
+	mode_para =
+		"lvc_mode", "ic_para1",
+		"sc_mode", "ic_para2";
+        use_coul_ibat = <1>;
+	status = "ok";
+};
+
+&direct_charger_sc {
+	current_ratio =
+		"3", "10", "25", "2", "-1",
+		"3", "12", "23", "1", "8000",
+		"0", "12", "23", "0", "0";
+};
+
+&qupv3_se1_i2c {
+	sm5450@6F {
+		sc_ibus_ocp = <3000>;
+	};
+};
+
+&qupv3_se2_i2c {
+	sm5450@6F {
+		sc_ibus_ocp = <3000>;
+	};
+};
+
+&qupv3_se2_i2c {
+	status = "ok";
+	sm5450@6F{
+		compatible = "sm5450";
+		reg = <0x6F>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&sm5450_irq_pins_default>;
+		intr_gpio_num = <85>; /* direct defined GPIO num */
+		intr_gpio = <&tlmm 85 0>;
+		fcp_support = <1>;
+		scp_support = <1>;
+		sc_ibus_ocp = <3300>;
+		sense_r_actual = <20>;
+		ic_role = <1>;
+		status = "ok";
+	};
+
+	hl7139@5F {
+		compatible = "hl7139";
+		reg = <0x5F>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&sm5450_irq_pins_default>;
+		intr_gpio_num = <85>; /* direct defined GPIO num */
+		intr_gpio = <&tlmm 85 0>;
+		fcp_support = <1>;
+		scp_support = <1>;
+		sense_r_actual = <20>;
+		vbat_ovp_para = <4600>;
+		sc_ibus_ocp = <3600>;
+		sc_ibat_ocp = <7000>;
+		switching_frequency = <1300>;
+		tdie_regulation = <110>;
+		ic_role = <1>;
+		status = "ok";
+	};
+
+	cw2217@64 {
+		compatible = "cellwise,cw2217";
+		reg = <0x64>;
+		cw,bat_name = "battery_gauge";
+		status = "ok";
+		ground_loop_comp_en = <1>;
+		ground_loop_comp_rcomp = <40>;
+		battery0{
+			batt_name = "BNTCAE_4400_4480_v0";
+			#include "../../../huawei_charger/cw2217_BNTCAE_4400mAh_4V48_BT266.dtsi"
+		};
+		battery1{
+			batt_name = "BCYCGL_4400_4480_v0";
+			#include "../../../huawei_charger/cw2217_BCYCGL_4400mAh_4V48_BT266.dtsi"
+		};
+	};
+
+	rt9426_battery@55{
+		reg = <0x55>;
+		rt,bat_name = "rt_battery";
+		compatible = "richtek,rt9426";
+		pinctrl-names = "default";
+		pinctrl-0 = <&rt9426_irq_pins_default>;
+		rt9426,gpio-intb = <&tlmm 106 0x0>;
+		need_reset_version = <9>;
+		rt_config_ver = <12>; /* NOTICE: need increase 1 ,when update batter model param */
+		ntc_compensation_is = <1>;
+		ground_loop_comp_en = <1>;
+		ground_loop_comp_rcomp = <40>;
+		status = "ok";
+		battery0{
+			batt_name = "BNTCAE_4400_4480_v0";
+			#include "../../../huawei_charger/rt9426_BNTCAE_4400mAh_4V48_BT266.dtsi"
+		};
+		battery1{
+			batt_name = "BCYCGL_4400_4480_v0";
+			#include "../../../huawei_charger/rt9426_BCYCGL_4400mAh_4V48_BT266.dtsi"
+		};
+	};
+
+	sh366101@5A {
+		compatible = "sh,sh366101";
+		reg = <0x5A>;
+		sh,bat_name = "battery_gauge";
+		test_data = <100>;
+		status = "ok";
+		battery0{
+			batt_name = "BNTCAE_4400_4480_v0";
+			#include "../../../huawei_charger/sh366101_BNTCAE_4400mAh_4V48_BT266.dtsi"
+		};
+		battery1{
+			batt_name = "BCYCGL_4400_4480_v0";
+			#include "../../../huawei_charger/sh366101_BNTCAE_4400mAh_4V48_BT266.dtsi"
+		};
+	};
+
+	rt1711_i2c@4e {
+		compatible = "richtek,rt1711";
+		reg = <0x4e>;
+		status = "ok";
+		pinctrl-names = "default";
+		pinctrl-0 = <&rt1711h_irq_pins_default>;
+		rt1711,irq_pin = <&tlmm 107 0>;
+		rt-dual,supported_modes = <0>; /* 0: dfp/ufp, 1: dfp, 2: ufp */
+		rt-tcpc,name = "type_c_port0"; /* tcpc_device's name */
+		rt-tcpc,role_def = <4>; /* 0: SNK Only, 1: SRC Only, 2: DRP, 3: Try.SRC, 4: Try.SNK */
+		rt-tcpc,rp_level = <0>; /* 0: Default, 1: 1.5, 2: 3.0 */
+		rt-tcpc,en_temporary_lock = <1>; /* add for qcom6225, attach_wake_lock */
+		rt-tcpc,notifier_supply_num = <0>; /* the number of notifier supply */
+		pd-data {
+			pd,source-pdo-size = <1>;
+			pd,source-pdo-data = <0x00019064>;  /*<0x019014>;*/
+
+			pd,sink-pdo-size = <2>;
+			pd,sink-pdo-data = <0x000190c8 0x0002d0c8> ;   /* 0x0002d0c8 : 9V, 2A */
+
+			/*
+			No DP
+			pd,id-vdo-size = <3>;
+			pd,id-vdo-data = <0x500029cf 0x0 0x00010000>;
+			With DP
+			pd,id-vdo-size = <4>;
+			pd,id-vdo-data = <0xec0029cf 0x0 0x00010000 0x11000001>;
+			*/
+
+			pd,id-vdo-size = <4>;
+			pd,id-vdo-data = <0xec0012d1 0x0 0x107e0000 0x11000001>;
+		};
+		dpm_caps {
+			local_dr_power;
+			local_dr_data;
+			// local_ext_power;
+			local_usb_comm;
+			// local_usb_suspend;
+			// local_high_cap;
+			// local_give_back;
+			local_no_suspend;
+			local_vconn_supply;
+
+			attemp_enter_dp_mode;
+			attemp_discover_cable;
+			attemp_discover_id;
+
+			/* 0: disable, 1: prefer_snk, 2: prefer_src */
+			pr_check = <0>;
+			// pr_reject_as_source;
+			// pr_reject_as_sink;
+			pr_check_gp_source;
+			// pr_check_gp_sink;
+
+			/* 0: disable, 1: prefer_ufp, 2: prefer_dfp */
+			dr_check = <0>;
+			// dr_reject_as_dfp;
+			// dr_reject_as_ufp;
+
+			snk_prefer_low_voltage;
+			// snk_ignore_mismatch_current;
+		};
+		displayport {
+			/* connection type = "both", "ufp_d", "dfp_d" */
+			1st_connection = "dfp_d";
+			2nd_connection = "dfp_d";
+			signal,dp_v13;
+			//signal,dp_gen2;
+			//usbr20_not_used;
+			typec,receptacle;
+			ufp_d {
+				//pin_assignment,mode_a;
+				//pin_assignment,mode_b;
+				//pin_assignment,mode_c;
+				//pin_assignment,mode_d;
+				//pin_assignment,mode_e;
+			};
+			dfp_d {
+				/* Only support mode C & D */
+				//pin_assignment,mode_a;
+				//pin_assignment,mode_b;
+				pin_assignment,mode_c;
+				pin_assignment,mode_d;
+				pin_assignment,mode_e;
+				pin_assignment,mode_f;
+			};
+		};
+	};
+};

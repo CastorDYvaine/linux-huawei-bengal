@@ -1,0 +1,35 @@
+&class_sensors {
+     compatible = "huawei,ps_sensor";
+     status = "ok";
+};
+&sensor_underlight {
+     compatible = "sensor,underlight";
+     rect_info = <655 112 90 90>;
+     status = "ok";
+};
+&als_after_sale_als_s002_002 {
+    compatible = "als_s002_002";
+    als_after_sale_product = <5129>;
+    als_after_sale_xl = <602>;
+    als_after_sale_yl = <59>;
+    als_after_sale_xr = <702>;
+    als_after_sale_yr = <159>;
+    als_after_sale_gamma = <0>;
+    default = "652,109,1,1,220,192,159,127,102,74,56,31,4";
+};
+&als_after_sale_als_s004_001 {
+    compatible = "als_s004_001";
+    als_after_sale_product = <5130>;
+    als_after_sale_xl = <610>;
+    als_after_sale_yl = <61>;
+    als_after_sale_xr = <710>;
+    als_after_sale_yr = <161>;
+    als_after_sale_gamma = <0>;
+    default = "660,111,1,1,220,192,159,127,102,74,56,31,4";
+};
+&hw_sensor_info{
+	compatible = "huawei,sensor_info";
+	ps_ultrasonic_en = <1>;
+	status = "ok";
+};
+

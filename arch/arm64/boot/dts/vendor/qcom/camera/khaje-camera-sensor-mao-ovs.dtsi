@@ -1,0 +1,14 @@
+#include "khaje-camera-sensor-mao.dtsi"
+
+&product_name_camera {
+	product-name = "mao-ovs";
+};
+
+&cam_cci0 {
+	//Front
+	qcom,cam-sensor2 {
+		rgltr-min-voltage = <2800000 1050000 1800000 0>;
+		rgltr-max-voltage = <2800000 1050000 1800000 0>;
+		rgltr-load-current = <80000 1200000 0 0>;
+	};
+};

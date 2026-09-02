@@ -1,0 +1,180 @@
+&tlmm {
+	ext_pa {
+		ext_pa_default: ext_pa_default {
+			mux {
+				pins = "gpio54";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio54";
+				bias-pull-up;
+				input-enable;
+			};
+		};
+	};
+
+	simple_pa_id: simple_pa_id {
+		mux {
+			pins = "gpio101";
+			function =  "gpio";
+		};
+		config {
+			pins = "gpio101";
+			bias-pull-up;
+			input-enable;
+		};
+	};
+
+	audio_mic_en_on: audio_mic_en_on {
+		mux {
+			pins = "gpio111";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio111";
+			bias-disable;
+			output-high;
+			drive-strength = <2>; /* 2 MA */
+		};
+	};
+
+	audio_mic_en_off: audio_mic_en_off {
+		mux {
+			pins = "gpio111";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio111";
+			bias-disable;
+			output-low;
+			bias-pull-down; /* PULL DOWN */
+			drive-strength = <2>; /* 2 MA */
+		};
+	};
+
+	typec_ear_3v3_en_on: typec_ear_3v3_en_on {
+		mux {
+			pins = "gpio103";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio103";
+			drive-strength = <2>;
+			bias-disable;
+			output-high;
+		};
+	};
+
+	typec_ear_3v3_en_off: typec_ear_3v3_en_off {
+		mux {
+			pins = "gpio103";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio103";
+			drive-strength = <2>;
+			bias-pull-down;
+			input-enable;
+		};
+
+	};
+};
+
+&huawei_audio_info {
+	compatible = "hw,hw_audio_info";
+	product_identifier = "ctrn";
+	voice_vol_level = "10";
+	separate_param_for_different_pa;
+	need_identify_pa_vendor;
+	pinctrl-names = "ext_pa_default", "simple_pa_id";
+	pinctrl-0 = <&ext_pa_default>;
+	pinctrl-1 = <&simple_pa_id>;
+	spk-ext-simple-pa = <&tlmm 54 0>;
+	simple-pa-id-gpios = <&tlmm 100 0 &tlmm 101 0>;
+	support_one_id_pin;
+	need_time_control;
+	gpio_num = <2>; /* for simple pa vendor type GPIO*/
+	fm_device_switch = "true";
+	status = "ok";
+	hardware_info {
+		mic_num = "2";
+		status = "ok";
+		hostless_id_info {
+			hostless_id_reset = "true";
+			spk_rx_hostless_id = "30";
+			earpiece_rx_hostless_id = "30";
+			headset_rx_hostless_id = "30";
+			builtin_mic_tx_hostless_id = "31";
+			hsmic_tx_hostless_id = "41";
+		};
+	};
+};
+
+&audio_hw_config {
+	asr_enable = "true";
+	vassistant_call = "true";
+	cam_record_perf = "true";
+};
+
+&bolero {
+	wcd937x-codec {
+		qcom,cdc-micbias1-mv = <2700>;
+		qcom,cdc-micbias2-mv = <2700>;
+		qcom,cdc-micbias3-mv = <2700>;
+	};
+};
+
+&bengal_snd {
+	qcom,msm-mbhc-anahs-cmos = <1>;
+	disable_elect_insert_irq = "true";
+	always_enable_micbias_after_insert = "true";
+};
+
+&L22A{
+	regulator-name = "pm6125_l22";
+	regulator-min-microvolt = <2952000>;
+	regulator-max-microvolt = <3300000>;
+	qcom,init-voltage = <2952000>;
+};
+
+&ana_hs {
+	compatible = "huawei,ana_hs";
+	status = "ok";
+	ana_hs_core@0 {
+		compatible = "huawei,ana_hs_core";
+		regulator_used;
+		ana_hs_switch-supply = <&L22A>;
+		ana_hs_switch_vol = <3300000>;
+		bus_type = <2>; // 0: gpio,  1: i2c,   2: pinctrl
+
+		pinctrl-names = "mic_off", "mic_on", "ldo_off", "ldo_on";
+		pinctrl-0 = <&audio_mic_en_off>;
+		pinctrl-1 = <&audio_mic_en_on>;
+		pinctrl-2 = <&typec_ear_3v3_en_off>;
+		pinctrl-3 = <&typec_ear_3v3_en_on>;
+
+		plugout_timing_optimization = <1>;
+		plugin_status_stable_delay = <300>;
+		/* plug_in sequence */
+		plug_in_seq = <
+			0 0 0 0
+		>;
+
+		/* plug_out sequence */
+		plug_out_seq = <
+			0 0 0 0
+		>;
+
+		/* mic_gnd_switch used gpio */
+		mic_gnd_sequence = <
+			0 1 0 150
+		>;
+
+		status = "ok";
+	};
+};

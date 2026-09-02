@@ -1,0 +1,5 @@
+#include "khaje-camera-sensor-jln-v3a.dtsi"
+
+&product_name_camera {
+	product-name = "jln-i2c1M";
+};

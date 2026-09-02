@@ -1,0 +1,8 @@
+&sdhc_1 {
+    vdd-supply = <&L22A>;
+    qcom,vdd-voltage-level = <3300000 3300000>;
+    qcom,vdd-always-on;
+    qcom,force-sdhc1-probe;
+    /* auto_key_info @ name: enable_emmc type: uint32 default: 0 */
+    enable_emmc = <1>;
+};

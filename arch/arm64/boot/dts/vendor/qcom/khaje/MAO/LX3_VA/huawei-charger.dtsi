@@ -1,0 +1,7 @@
+&huawei_batt_info {
+	shield_ct_sign = <1>;
+};
+
+&low_power {
+	status = "disabled";
+};

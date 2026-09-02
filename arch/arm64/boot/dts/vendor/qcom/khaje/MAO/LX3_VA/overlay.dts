@@ -1,0 +1,23 @@
+/dts-v1/;
+/plugin/;
+
+#include "../common/common.dtsi"
+#include "huawei-charger.dtsi"
+#include "huawei-lcd.dtsi"
+#include "huawei-wifi.dtsi"
+#include "huawei_audio.dtsi"
+#include "huawei-camera.dtsi"
+
+/ {
+    model = "Huawei Technologies, Inc. MAO-LX9";
+    huawei,board-id = <8465>;
+};
+
+&rootparam {
+    /* auto_key_info @ name: boardid type: uint32 default: 0 */
+    qcom,boardid = <8 4 6 5>;
+    qcom,board_name = "MAO_LX3_VA";
+    qcom,product_name = "MAO-LX3";
+    hardware_version = "LLDM555";
+    huawei,modem_id = <0xFD480100 0x0>;
+};

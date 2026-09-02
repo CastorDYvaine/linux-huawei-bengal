@@ -1,0 +1,17 @@
+&direct_charger_sc{
+	volt_para =
+		"4050", "5000", "4000",
+		"4200", "4000", "3100",
+		"4400", "3100", "1000";
+	volt_para1 =
+		"4200", "5000", "4000",
+		"4400", "4000", "1000";
+};
+
+&direct_charge_comp {
+	status = "disabled";
+};
+
+&direct_charger{
+	compensate_r = <20>;
+};

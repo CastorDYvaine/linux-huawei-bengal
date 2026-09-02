@@ -1,0 +1,32 @@
+
+&dsi_bne_310_c03_6p67_qcom {
+        lcd-kit,panel-aod-low-brightness-cmds = <0x39 0x01 0x00 0x00 0x00 0x00 0x03 0x51 0x04 0x88
+                0x15 0x01 0x00 0x00 0x00 0x00 0x02 0xFE 0x00>;
+};
+&dsi_bne_350_c03_6p67_qcom {
+                qcom,esd-check-enabled;
+                esd-reg-change-enabled;
+                qcom,mdss-dsi-panel-status-command = [15 01 00 00 00 00 02 FE 00
+                        06 01 00 00 00 00 01 0A
+                        06 01 00 00 0a 00 01 FA
+                        06 01 00 00 00 00 04 2A 00 00 00
+                        06 01 00 00 00 00 04 2B 00 00 00
+                        15 01 00 00 00 00 02 FE D0
+                        15 01 00 00 11 00 02 B9 02
+                        15 01 00 00 00 00 02 B9 00
+                        15 01 00 00 11 00 02 FE 00
+                        15 01 00 00 00 00 02 FE 00
+                        06 01 00 00 00 00 01 FE
+                        15 01 00 00 0a 00 02 fe 20
+                        15 01 00 00 0a 00 02 63 00
+                        15 01 00 00 0a 00 02 fe 20
+                        06 01 00 00 0a 00 01 F8
+                        06 01 00 00 0a 00 01 F9
+                        15 01 00 00 0a 00 02 fe 00];
+                qcom,mdss-dsi-panel-status-command-state = "dsi_lp_mode";
+                qcom,mdss-dsi-panel-status-check-mode = "reg_read";
+                qcom,mdss-dsi-panel-status-read-length = <0 1 1 4 4 0 0 0 0 0 1 0 0 0 1 1 0>;
+                qcom,mdss-dsi-panel-status-value = <0x9C>,<0x01>,<0x00 0x00 0x04 0x37>,<0x00 0x00 0x09 0x5F>,<0x00>,<0xFF>,<0xFF>;
+        lcd-kit,panel-aod-low-brightness-cmds = <0x39 0x01 0x00 0x00 0x00 0x00 0x03 0x51 0x04 0x88
+                0x15 0x01 0x00 0x00 0x00 0x00 0x02 0xFE 0x00>;
+};

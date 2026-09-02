@@ -1,0 +1,58 @@
+&tlmm {
+    fkey_default: fkey_default {
+        mux {
+            pins = "gpio71";
+            function =  "gpio";
+        };
+        config {
+            pins = "gpio71";
+            drive-strength = <2>;
+            bias-pull-up;
+        };
+    };
+};
+
+&f_key {
+    compatible = "huawei,f_key";
+    fkey,name = "fkey";
+    fkey,input-code = <249>;
+    fkey,gpio = <&tlmm 71 0>;
+    pinctrl-names = "default";
+    pinctrl-0 = <&fkey_default>;
+    status = "ok";
+};
+
+&pm6125_gpios {
+    vib_ldo_en {
+        vib_ldo_en_default:vib_ldo_en_default {
+            pins = "gpio9";
+            function = "normal";
+            input-disable;
+            power-source = <0>;
+            bias-disable;
+            output-high;
+            qcom,drive-strength = <2>;
+        };
+        vib_ldo_en_suspend:vib_ldo_en_suspend {
+            pins = "gpio9";
+            function = "normal";
+            input-disable;
+            power-source = <0>;
+            bias-disable;
+            output-low;
+            qcom,drive-strength = <2>;
+        };
+    };
+};
+
+&soc {
+    vibrator_gpio {
+        compatible = "vib,pmi-ldo-vibrator";
+        vib,platform-en-gpio = <&pm6125_gpios 9 GPIO_ACTIVE_HIGH>;
+    };
+};
+
+&class_sensors {
+     compatible = "huawei,ps_sensor";
+     status = "ok";
+};

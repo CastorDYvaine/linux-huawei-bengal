@@ -1,0 +1,23 @@
+/dts-v1/;
+/plugin/;
+
+#include "../common/common.dtsi"
+#include "../common/huawei-lowram.dtsi"
+#include "huawei-wifi.dtsi"
+#include "huawei-bt.dtsi"
+#include "huawei_audio.dtsi"
+#include "huawei-camera.dtsi"
+
+/ {
+    model = "Huawei Technologies, Inc. AGS5-L09";
+    huawei,board-id = <8102>;
+};
+
+&rootparam {
+    /* auto_key_info @ name: boardid type: uint32 default: 0 */
+    qcom,boardid = <8 1 0 2>;
+    qcom,board_name = "AGS5_L09_VA";
+    qcom,product_name = "AGS5-L09";
+    hardware_version = "SH1AGS5M";
+    huawei,modem_id = <0xfd258a00 0x0>;
+};

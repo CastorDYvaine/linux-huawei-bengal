@@ -1,0 +1,23 @@
+/dts-v1/;
+/plugin/;
+
+#include "../common/common.dtsi"
+#include "huawei-charger.dtsi"
+#include "huawei-lcd.dtsi"
+#include "huawei-camera.dtsi"
+#include "huawei-wifi.dtsi"
+#include "../common/huawei-thp.dtsi"
+
+/ {
+    model = "Huawei Technologies, Inc. JLN-LX3";
+    huawei,board-id = <8561>;
+};
+
+&rootparam {
+    /* auto_key_info @ name: boardid type: uint32 default: 0 */
+    qcom,boardid = <8 5 6 1>;
+    qcom,board_name = "BNE_LX3_VH";
+    qcom,product_name = "BNE-LX3";
+    hardware_version = "HL1BNEM";
+    huawei,modem_id = <0xFD460400 0x0>;
+};

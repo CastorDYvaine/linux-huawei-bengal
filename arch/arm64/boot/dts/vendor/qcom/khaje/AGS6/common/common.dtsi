@@ -1,0 +1,11 @@
+#include "../../common/common.dtsi"
+#include "huawei-tp.dtsi"
+#include "../../../camera/khaje-camera-sensor-ags6.dtsi"
+#include "huawei_charger_22p5W.dtsi"
+#include "huawei-lcd.dtsi"
+#include "huawei-wifi.dtsi"
+#include "huawei-bt.dtsi"
+#include "huawei_audio.dtsi"
+&pm6125_adc_tm {
+        NTC_boardID_change_gpio = <&tlmm 59 GPIO_ACTIVE_HIGH>;
+};

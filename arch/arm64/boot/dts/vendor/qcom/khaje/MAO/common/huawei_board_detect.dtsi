@@ -1,0 +1,56 @@
+&tlmm {
+	ant_boardid_gpio_det_default:ant_boardid_gpio_det_default {
+		mux {
+			pins = "gpio67";
+			function =  "gpio";
+		};
+		config {
+			pins = "gpio67";
+			num-grp-pins = <1>;
+			drive-strength = <2>;
+			bias-disable;
+		};
+	};
+
+	ant_boardid_gpio_det_bias_up:ant_boardid_gpio_det_bias_up {
+		mux {
+			pins = "gpio67";
+			function =  "gpio";
+		};
+		config {
+			pins = "gpio67";
+			num-grp-pins = <1>;
+			drive-strength = <2>;
+			bias-pull-up;
+			input-enable;
+		};
+	};
+
+	ant_boardid_gpio_det_bias_down:ant_boardid_gpio_det_bias_down {
+		mux {
+			pins = "gpio67";
+			function =  "gpio";
+		};
+		config {
+			pins = "gpio67";
+			num-grp-pins = <1>;
+			drive-strength = <2>;
+			bias-pull-down;
+			input-enable;
+		};
+	};
+};
+&soc{
+	antenna_board_detect: antenna_board_detect {
+		compatible = "huawei,antenna_board_detect";
+		pinctrl-names = "state_default", "state_bias_up", "state_bias_down";
+		pinctrl-0 = <&ant_boardid_gpio_det_default>;
+		pinctrl-1 = <&ant_boardid_gpio_det_bias_up>;
+		pinctrl-2 = <&ant_boardid_gpio_det_bias_down>;
+		gpio_count = <1>;
+		board_version = <7>;
+		gpios = <&tlmm 67 0>;
+		debounce-interval = <15>;
+		status = "ok";
+	};
+};

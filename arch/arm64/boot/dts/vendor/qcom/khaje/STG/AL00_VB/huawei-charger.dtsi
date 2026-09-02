@@ -1,0 +1,3 @@
+&usb_short_circuit_protect {
+        status = "disabled";
+};

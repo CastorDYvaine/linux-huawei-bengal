@@ -1,0 +1,24 @@
+/dts-v1/;
+/plugin/;
+
+#include "../common/common.dtsi"
+
+/ {
+    model = "Huawei Technologies, Inc. AGS6-W00";
+    huawei,board-id = <8121>;
+};
+
+&rootparam {
+    /* auto_key_info @ name: boardid type: uint32 default: 0 */
+    qcom,boardid = <8 1 2 1>;
+    qcom,board_name = "AGS6_W00_VB";
+    qcom,product_name = "AGS6-W00";
+    hardware_version = "SH1AGS6QM";
+    huawei,modem_id = <0xfd258300 0x0>;
+};
+
+&singleap_wifionly {
+        compatible = "singleap,wifionly";
+        is_wifionly = "1";
+        status = "ok";
+};

@@ -1,0 +1,19 @@
+/dts-v1/;
+/plugin/;
+
+#include "../common/common.dtsi"
+#include "huawei-wifi.dtsi"
+
+/ {
+    model = "Huawei Technologies, Inc. GFY-AL00";
+    huawei,board-id = <8335>;
+};
+
+&rootparam {
+    /* auto_key_info @ name: boardid type: uint32 default: 0 */
+    qcom,boardid = <8 3 3 5>;
+    qcom,board_name = "GFY_AL00_VA";
+    qcom,product_name = "GFY-AL00";
+    hardware_version = "HL1GFYM";
+    huawei,modem_id = <0xFD4A0000 0x0>;
+};

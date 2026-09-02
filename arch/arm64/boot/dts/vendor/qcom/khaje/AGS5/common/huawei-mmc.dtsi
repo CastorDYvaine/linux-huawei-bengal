@@ -1,0 +1,11 @@
+/* mmc config */
+&sdc2_cd_on {
+	 config {
+		 bias-pull-up;
+	 };
+};
+
+&sdhc_2 {
+	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>;
+	status = "ok";
+};

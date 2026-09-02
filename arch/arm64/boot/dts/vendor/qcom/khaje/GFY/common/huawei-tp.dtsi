@@ -1,0 +1,192 @@
+/* touch panel config */
+&tlmm {
+    pmx_ts_int_active {
+        ts_int_active: ts_int_active {
+            mux {
+                pins = "gpio97";
+                function = "gpio";
+            };
+
+            config {
+                pins = "gpio97";
+                drive-strength = <8>;
+                bias-pull-up;
+            };
+        };
+    };
+
+    pmx_ts_int_suspend {
+        ts_int_suspend: ts_int_suspend {
+            mux {
+                pins = "gpio97";
+                function = "gpio";
+            };
+
+            config {
+                pins = "gpio97";
+                drive-strength = <2>;
+                bias-pull-down;
+            };
+        };
+    };
+
+    pmx_ts_reset_active {
+        ts_reset_active: ts_reset_active {
+            mux {
+                pins = "gpio86";
+                function = "gpio";
+            };
+
+            config {
+                pins = "gpio86";
+                drive-strength = <8>;
+                bias-pull-up;
+            };
+        };
+    };
+
+    pmx_ts_reset_suspend {
+        ts_reset_suspend: ts_reset_suspend {
+            mux {
+                pins = "gpio86";
+                function = "gpio";
+            };
+
+            config {
+                pins = "gpio86";
+                drive-strength = <2>;
+                bias-pull-down;
+            };
+        };
+    };
+
+    pmx_ts_release {
+        ts_release: ts_release {
+            mux {
+                pins = "gpio97", "gpio86";
+                function = "gpio";
+            };
+
+            config {
+                pins = "gpio97", "gpio86";
+                drive-strength = <2>;
+                bias-pull-down;
+            };
+        };
+    };
+};
+
+&qupv3_se0_spi {
+    status = "ok";
+
+    #address-cells = <1>;
+    #size-cells = <0>;
+    qcom.rt = <1>;
+    huawei_thp: huawei_thp@10 {
+        compatible = "huawei,thp";
+        /* SPI Config */
+        spi-max-frequency = <10000000>;
+        spi-bus-id = <1>;
+        spi-mode = <0>;
+        reg = <0>;
+        spi_sync_cs_hi_delay_ns = <200>;
+        spi_sync_cs_low_delay_ns = <10>;
+
+        /* Timing */
+        boot_reset_hi_delay_ms = <1>;
+        boot_reset_low_delay_ms = <0>;
+        boot_reset_after_delay_ms = <0>;
+        resume_reset_after_delay_ms = <1>;
+        suspend_reset_after_delay_ms = <1>;
+        use_mdelay = <1>;
+
+        /* GPIO Config */
+        irq_flag = <0x00000002>;
+        interrupt-parent = <&tlmm>;
+        interrupts = <97 0>;
+        rst_gpio = <&tlmm 86 0x00>;
+        irq_gpio = <&tlmm 97 0x00>;
+        cs_gpio = <&tlmm 3 0x00>;
+        early_suspend_delay_ms = <250>;
+        wait_afe_screen_on_support = <1>;
+
+        /* Feature Config */
+        pt_station_test = <1>;
+        hide_product_info_en = <1>;
+        support_vendor_ic_type = <1>;
+        supported_charger = <1>;
+        aptouch_daemon_version = <3>;
+        use_thp_queue = <1>;
+        notify_daemon_release_lock = <1>;
+        need_enable_irq_wake = <1>;
+        aod_display_support = <1>;
+        use_ap_gesture = <1>;
+        use_aod_power_ctrl_notify = <1>;
+        support_gesture_mode = <1>;
+        lcd_gesture_mode_support = <1>;
+        avoid_low_level_irq_storm = <1>;
+        tp_time_sync_support = <1>;
+        need_notify_to_roi_algo = <1>;
+
+        thp_input_dev {
+            compatible = "huawei,thp_input";
+            abs_max_x = <720>;
+            abs_max_y = <1600>;
+            magnification_of_finger_resolution = <8>;
+        };
+        novatech {
+            spi_sync_cs_hi_delay_ns = <200>;
+            spi_sync_cs_low_delay_ns = <200>;
+            change_spi_driving_force = <1>;
+            support_vendor_ic_type = <1>;
+        };
+        synaptics_thp {
+            irq_flag = <0x00000008>;
+            spi_sync_cs_hi_delay_ns = <20>;
+            spi_sync_cs_low_delay_ns = <20>;
+            spi-mode = <3>;
+            bits-per-word = <8>;
+            need_huge_memory_in_spi = <1>;
+            change_spi_driving_force = <1>;
+            support_vendor_ic_type = <0>;
+            wait_lcd_rst_time = <40>;
+            aod_display_support = <1>;
+            not_control_irq_in_irq_handler = <1>;
+            omni_distinguish_flag = <1>;
+            avoid_low_level_irq_storm = <1>;
+            use_ap_gesture = <1>;
+            aod_support_on_tddi = <1>;
+            support_low_power_mode = <0>;
+            need_enable_irq_wake = <1>;
+            use_normalized_ap_protocol = <1>;
+        };
+        focaltech {
+            boot_reset_hi_delay_ms = <0>;
+            boot_reset_low_delay_ms = <5>;
+            spi_sync_cs_hi_delay_ns = <200>;
+            spi_sync_cs_low_delay_ns = <1000>;
+            support_vendor_ic_type = <1>;
+            change_spi_driving_force = <1>;
+            reset_status_in_suspend_mode = <0>;
+            lcd_need_get_afe_status = <0>;
+        };
+        ssl {
+            use_default_configuration = <1>;
+            boot_reset_low_delay_ms = <5>;
+            boot_reset_hi_delay_ms = <5>;
+        };
+        ilitek {
+            irq_flag = <0x00000002>;
+            spi-mode = <0>;
+            detect_by_dummy_reg = <1>;
+            deepsleepin_support = <1>;
+            boot_reset_low_delay_ms = <5>;
+            boot_reset_hi_delay_ms = <5>;
+            reset_status_in_suspend_mode = <1>;
+            wait_lcd_rst_time = <40>;
+            aod_support_on_tddi = <1>;
+            use_ap_gesture = <1>;
+            need_enable_irq_wake = <1>;
+        };
+    };
+};

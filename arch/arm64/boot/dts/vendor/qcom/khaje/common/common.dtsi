@@ -1,0 +1,6 @@
+#include "../../khaje-idp-nopmi-overlay.dts"
+#include "huawei_dev_detect/huawei_dev_detect.dtsi"
+
+#ifdef LARGE_TA_MEMORY
+#include "large_ta_memory/large_ta_memory.dtsi"
+#endif
