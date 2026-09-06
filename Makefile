@@ -1404,7 +1404,7 @@ ifndef LCD_KIT_DTS_OUT
 LCD_KIT_DTS_OUT := $(objtree)/arch/$(SRCARCH)/boot/dts
 endif
 export LCD_KIT_DTS_OUT
-TOP_DIR := $(srctree)/
+TOP_DIR := $(srctree)/../../
 config_generate_dir := ${LCD_KIT_DTS_OUT}/lcdkit3.0
 LCD_KIT_TOOLPATH := $(TOP_DIR)/vendor/huawei/chipset_common/devkit/lcdkit/lcdkit3.0/tools
 LCD_KIT_DPD_FILE_PATH = $(TOP_DIR)/out/target/product/$(TARGET_PRODUCT)/obj/KERNEL_OBJ/drivers/devkit/lcdkit/lcdkit3.0/kernel/qcom/common/src
